@@ -1,0 +1,45 @@
+<script>
+    document.getElementById("btn").addEventListener("click",checkAccesss);
+    var champLogin = true;
+  
+   /* function championAccess() { // for later development
+      var champKey = document.getElementById("accessKey").value;
+      google.script.run.withSuccessHandler(
+      ).withFailureHandler(
+  
+      ).champLogin(champKey);
+    }
+   */     
+    function checkAccesss() {
+      var key = document.getElementById("accessKey").value;
+     if (key === ""){
+       alert("Access Code Required")
+     }else{
+      loadImg();
+      google.script.run.withSuccessHandler(userLink => {
+        if(userLink === "Incorrect Key"){
+          alert(userLink);
+        }else{
+          location.replace(userLink);
+        }
+  
+      }).withFailureHandler(er => {
+        alert("Unable to reach server")
+      }).checkKey(key);
+      console.log('complete');
+      document.getElementById("accessKey").value = "";
+     }
+  
+    }
+    function loadImg(){
+      var img = "https://drive.google.com/uc?export=download&id=18u80eTAAvm_VCYXQ8C6O2yhfNOdXYUIF"
+      document.getElementById("imgdiv").innerHTML += `<img src=${img}>`;
+    }
+    if (champLogin){
+      document.getElementById('heading').innerHTML += '<p class="heading"> Survey Login </p>';
+    }else {
+      document.getElementById('heading').innerHTML += '<p class="heading"> Champion Login </p>';
+    }
+    
+  </script>
+  
